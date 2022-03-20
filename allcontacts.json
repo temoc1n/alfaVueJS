@@ -1,0 +1,16 @@
+{
+    "user1":{
+        "id": 1,
+        "username":"admin",
+        "contact":"939611645",
+        "email":"email@gmail.com",
+        "pic":"pic.png"
+    },
+    "user2":{
+        "id": 1,
+        "username":"user2",
+        "contact":"9353426",
+        "email":"email@gmail.com",
+        "pic":"pic.png"
+    }
+}
