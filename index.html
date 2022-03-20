@@ -5,64 +5,116 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Exam VueJS</title>
+    <title>Login</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
     <script src="https://unpkg.com/vue@2"></script>
     <script src="https://unpkg.com/vue-router@4"></script>
-    <script src="./require.js"></script>
 
     <style>
-      body{
-        background-color: rgb(110, 182, 241);
-      }
-    </style>
+        body{
+            background-color: black;
+        }
+        .gradient-custom {
+            /* fallback for old browsers */
+            background: #6a11cb;
+
+            /* Chrome 10-25, Safari 5.1-6 */
+            background: -webkit-linear-gradient(to right, rgba(106, 17, 203, 1), rgba(37, 117, 252, 1));
+
+            /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+            background: linear-gradient(to right, rgba(106, 17, 203, 1), rgba(37, 117, 252, 1))
+        }   
+        #incorrectlogin{
+            color: red;
+        }
+      </style>
 </head>
 <body>
-  <div id="app">
-    <nav class="navbar navbar-expand-sm bg-primary navbar-dark">
-      <ul class="navbar-nav">
-        <li class="nav-item active">
-          <a class="nav-link" href="login.html" style="color: white;">Login</a>
-        </li>
-      </ul>
-    </nav>
-    <div v-if="Object.entries(lista).length !== 0">
-      <div v-for="addme in lista" class="card" style="width:250px;">
-        <img class="card-img-top" :src="addme.pic" alt="Card image">
-        <div class="card-body">
-            <h4 class="card-title">{{addme.username}}</h4>
-            <p class="card-text">{{addme.contact}}</p>
-            <p class="card-text">{{addme.email}}</p>
-            <a href="info.html" class="btn btn-primary">See Profile</a>
-        </div>
-      </div>
-    </div>
-    <div v-else>
-      <div class="alert alert-info fade show" role="alert">
-          <h4 class="alert-heading">No contacts saved</h4>
-          <p></p>
-      </div>
-    </div>
-  </div>
-  <script>
-    new Vue({
-      el:"#app",
-      data:{
-        lista: [],
-      },
-      mounted(){
-          const t = this;
-          fetch('./allcontacts.json')
-          .then((response) => {
-            return  response.json();
-          })
-          .then((res) => {
-            t.lista = JSON.parse(JSON.stringify(res));
-            return t.lista;
-          });
-        }
-    })
-  </script>
+    <div id="app">
+        <section class="vh-90 gradient-custom">
+            <div class="container py-5 h-100">
+            <div class="row d-flex justify-content-center align-items-center h-100">
+                <div classs="container p-5">
+                    <div class="row no-gutters">
+                        <div class="col-lg-6 col-md-12 m-auto">
+                            <div v-if="incorretLogin" class="alert alert-danger fade show" role="alert">
+                                 <h4 class="alert-heading">Login Error!</h4>
+                                  <p>Wrong Email or Password</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 col-md-8 col-lg-6 col-xl-5">
+                <div class="card bg-dark text-white" style="border-radius: 1rem;">
+                    <div class="card-body p-4 text-center">
+        
+                    <div class="mb-md-5 mt-md-4 pb-5">
+        
+                        <h2 class="fw-bold mb-2 text-uppercase">Admin Panel</h2>
+                        <p class="text-white-50 mb-5">Please enter your login and password!</p>
+        
+                        <div class="form-outline form-white mb-4">
+                        <input type="text" id="typeUserX" class="form-control form-control-lg" v-model="username"/>
+                        <label class="form-label" for="typeEmailX">Username</label>
+                        </div>
+        
+                        <div class="form-outline form-white mb-4">
+                        <input type="password" id="typePasswordX" class="form-control form-control-lg" v-model="password"/>
+                        <label class="form-label" for="typePasswordX">Password</label>
+                        </div>
+        
+                        <p class="small mb-5 pb-lg-2"><a class="text-white-50" href="recover.html">Forgot password?</a></p>
+        
+                        <button class="btn btn-outline-light btn-lg px-5" @click="checkboxes()">Login</button>
+        
+                        <div class="d-flex justify-content-center text-center mt-4 pt-1"></div>
+
+                    </div>
+                    </div>
+                </div>
+                </div>
+            </div>
+            </div>
+        </section>
+        <script>
+            new Vue({
+                el:"#app",
+                data:{
+                    username: undefined,
+                    password: undefined,
+                    lista:[],
+                    incorretlogincolor: "red",
+                    incorretLogin: undefined,
+                    reedirect: "#"
+                },
+                methods:{
+                    checkboxes(){
+                        if(this.username == this.lista.username && this.password == this.lista.password){
+                            window.location.href="create.html"
+                        }else{
+                            return this.incorretLogin= true
+                        }
+                    }
+                },
+                watch:{
+                    correctLogin(){
+                        return this.reedirect = "create.html"
+                    }
+                },
+                mounted(){
+                    const t = this;
+                    fetch('./users.json')
+                    .then((response) => {
+                        return  response.json();
+                    })
+                    .then((res) => {
+                        t.lista = JSON.parse(JSON.stringify(res));
+                        return t.lista;
+                    });
+                }
+            })
+        </script>
+    </div>  
 </body>
 </html>
