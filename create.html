@@ -37,10 +37,10 @@
             <a href="info.html" class="btn btn-primary">See Profile</a>
             <a class="btn btn-primary" @click="editCard">Edit</a>
             <div v-if="editable">
-                <input type="text" placeholder="Nome: {{lista.username}}">
-                <input type="text" placeholder="Nome: {{lista.contact}}">
-                <input type="text" placeholder="Nome: {{lista.email}}">
-                <input type="text" placeholder="Nome: {{lista.pic}}">
+                <input type="text" placeholder="Nome: " v-model="addme.username">
+                <input type="text" placeholder="Contacto:" v-model="addme.contact"> 
+                <input type="text" placeholder="Email: " v-model="addme.email">
+                <input type="file" accept="image/*" placeholder="Picture: ">
             </div>
         </div>
       </div>
